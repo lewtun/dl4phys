@@ -1,0 +1,27 @@
+name: deploy-book
+
+on: [push]
+
+# This job installs dependencies, build the book, and pushes it to `gh-pages`
+jobs:
+
+  deploy-book:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: s-weigand/setup-conda@v1
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --no-cache-dir -r requirements.txt
+    - name: Build the book
+      run: env TF_CPP_MIN_LOG_LEVEL=3 jupyter-book build .
+    - name: Deploy Jupyter book to GitHub pages
+      uses: peaceiris/actions-gh-pages@v3.6.1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: _build/html
+        force_orphan: true

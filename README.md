@@ -1,2 +1,2 @@
-# dl4phys
-Deep learning for particle physicists
+# Deep Learning for Particle Physicists
+Materials for the Deep Learning for Particle Physicists course
