@@ -1,6 +1,6 @@
 # Deep Learning for Particle Physicists
 
-Welcome to the graduate course on deep learning at the Albert Einstein Center for Fundamental Physics of the University of Bern!
+> Welcome to the graduate course on deep learning at the [Albert Einstein Center for Fundamental Physics](https://www.einstein.unibe.ch/) of the University of Bern!
 
 ## Why all the fuss?
 
