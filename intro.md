@@ -15,3 +15,5 @@ Deep learning is a subfield of artificial intelligence that focuses on using alg
 ## Cloud environment
 
 ## Recommended references
+
+* [Physics meets ML](http://www.physicsmeetsml.org/)
