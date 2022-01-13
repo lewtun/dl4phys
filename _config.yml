@@ -3,8 +3,8 @@
 
 title: Deep Learning for Particle Physicists
 author: Lewis Tunstall
-logo: logo.png
-copyright: 2022
+logo: logo.jpg
+copyright: "2022"
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
