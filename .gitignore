@@ -130,3 +130,6 @@ dmypy.json
 
 # Book build
 _build
+
+# Datasets
+data/
