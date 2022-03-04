@@ -133,3 +133,6 @@ _build
 
 # Datasets
 data/
+
+# Pytorch Lightning
+lightning_logs/
