@@ -1,6 +1,4 @@
 matplotlib
-numpy
-scikit-learn
 jupyter-book
-pytorch-lightning
 datasets
+fastai
