@@ -1,6 +1,6 @@
 import pandas as pd
 
-GITHUB_PATH_PREFIX = "nlp-with-transformers/notebooks/blob/main/"
+GITHUB_PATH_PREFIX = "lewtun/dl4phys/blob/main/"
 
 CHAPTER_TO_NB = {
     "1 - Jet tagging with neural networks": "lecture01",
