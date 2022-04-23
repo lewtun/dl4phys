@@ -1,6 +1,9 @@
 name: deploy-book
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 # This job installs dependencies, build the book, and pushes it to `gh-pages`
 jobs:
@@ -16,7 +19,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m pip install --no-cache-dir -r requirements.txt
+        python -m pip install --no-cache-dir -r requirements-dev.txt
     - name: Build the book
       run: env TF_CPP_MIN_LOG_LEVEL=3 jupyter-book build .
     - name: Deploy Jupyter book to GitHub pages

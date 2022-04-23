@@ -26,6 +26,43 @@ Throughout the course, students will learn how to implement neural networks from
 
 Although no prior knowledge of deep learning is required, we do recommend having some familiarity with the core concepts of machine learning. This course is _hands on_, which means you can expect to be running a lot of code in [PyTorch](https://pytorch.org/). You don't need to know PyTorch, but we assume that you're comfortable programming in Python and data analysis libraries such as NumPy. A useful precursor to the material covered in this course is [_Practical Machine Learning for Physicists_](https://lewtun.github.io/hepml/).
 
+## Getting started
+
+You can run the Jupyter notebooks from this course on cloud platforms like [Google Colab](https://colab.research.google.com/) or your local machine. Note that each notebook requires a GPU to run in a reasonable amount of time, so we recommend one of the cloud platforms as they come pre-installed with CUDA.
+
+### Running on a cloud platform
+
+To run these notebooks on a cloud platform, just click on one of the badges in the table below:
+
+<!--This table is automatically generated, do not fill manually!-->
+
+
+| Lecture                              | Colab                                                                                                                                                           | Kaggle                                                                                                                                                               | Gradient                                                                                                                                           | Studio Lab                                                                                                                                                               |
+|:-------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1 - Jet tagging with neural networks | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lewtun/dl4phys/blob/main/lecture01.ipynb) | [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://kaggle.com/kernels/welcome?src=https://github.com/lewtun/dl4phys/blob/main/lecture01.ipynb) | [![Gradient](https://assets.paperspace.io/img/gradient-badge.svg)](https://console.paperspace.com/github/lewtun/dl4phys/blob/main/lecture01.ipynb) | [![Open In SageMaker Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/lewtun/dl4phys/blob/main/lecture01.ipynb) |
+
+
+<!--End of table-->
+
+Nowadays, the GPUs on Colab tend to be K80s (which have limited memory), so we recommend using [Kaggle](https://www.kaggle.com/docs/notebooks), [Gradient](https://gradient.run/notebooks), or [SageMaker Studio Lab](https://studiolab.sagemaker.aws/). These platforms tend to provide more performant GPUs like P100s, all for free!
+
+> Note: some cloud platforms like Kaggle require you to restart the notebook after installing new packages.
+
+### Running on your machine
+
+To run the notebooks on your own machine, first clone the repository and navigate to it:
+
+```bash
+$ git clone https://github.com/nlp-with-transformers/notebooks.git
+$ cd notebooks
+```
+
+Next, run the following command to create a `conda` virtual environment that contains all the libraries needed to run the notebooks:
+
+```bash
+$ conda env create -f environment.yml
+```
+
 ## Recommended references
 
 * The [Particle Data Group](https://pdg.lbl.gov/2021/reviews/contents_sports.html) has a wonderfully concise review on machine learning. You can find it under _Mathematical Tools > Machine Learning_.
