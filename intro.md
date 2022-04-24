@@ -24,7 +24,7 @@ Throughout the course, students will learn how to implement neural networks from
 
 ## Prerequisites
 
-Although no prior knowledge of deep learning is required, we do recommend having some familiarity with the core concepts of machine learning. This course is _hands on_, which means you can expect to be running a lot of code in [PyTorch](https://pytorch.org/). You don't need to know PyTorch, but we assume that you're comfortable programming in Python and data analysis libraries such as NumPy. A useful precursor to the material covered in this course is [_Practical Machine Learning for Physicists_](https://lewtun.github.io/hepml/).
+Although no prior knowledge of deep learning is required, we do recommend having some familiarity with the core concepts of machine learning. This course is _hands on_, which means you can expect to be running a lot of code in [fastai](https://docs.fast.ai/) and [PyTorch](https://pytorch.org/). You don't need to know either of these frameworks, but we assume that you're comfortable programming in Python and data analysis libraries such as NumPy. A useful precursor to the material covered in this course is [_Practical Machine Learning for Physicists_](https://lewtun.github.io/hepml/).
 
 ## Getting started
 
@@ -64,6 +64,13 @@ $ conda env create -f environment.yml
 ```
 
 ## Recommended references
+
+### Deep learning
+
+* [Deep Learning for Coders with Fastai and PyTorch](https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch/dp/1492045527) by Jeremy Howard and Sylvain Gugger. A highly accessible and practical book that will serve as a guide for these lectures.
+* [Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow](https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow-dp-1492032646/dp/1492032646) by Aurélien Géron. An excellent book that covers both machine learning and deep learning.
+
+### Particle physics
 
 * The [Particle Data Group](https://pdg.lbl.gov/2021/reviews/contents_sports.html) has a wonderfully concise review on machine learning. You can find it under _Mathematical Tools > Machine Learning_.
 * [_Jet Substructure at the Large Hadron Collider_](https://arxiv.org/abs/1709.04464) by A. Larkowski et al (2017). Although ancient by deep learning standards (most papers are outdated the moment they land on the arXiv 🙃), this review covers all the concepts we'll need when looking at jets and how to tag them with neural networks.
