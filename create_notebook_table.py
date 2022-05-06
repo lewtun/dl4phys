@@ -4,6 +4,7 @@ GITHUB_PATH_PREFIX = "lewtun/dl4phys/blob/main/"
 
 CHAPTER_TO_NB = {
     "1 - Jet tagging with neural networks": "lecture01",
+    "2 - Gradient descent": "lecture02",
 }
 
 
