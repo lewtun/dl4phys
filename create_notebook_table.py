@@ -6,7 +6,8 @@ CHAPTER_TO_NB = {
     "1 - Jet tagging with neural networks": "lecture01",
     "2 - Gradient descent": "lecture02",
     "3 - Neural network deep dive": "lecture03",
-    "4 - Jet images and transfer learning with CNNs": "lecture04"
+    "4 - Jet images and transfer learning with CNNs": "lecture04",
+    "5 - Convolutional neural networks": "lecture05"
 }
 
 
