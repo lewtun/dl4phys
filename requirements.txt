@@ -2,3 +2,6 @@ matplotlib
 datasets
 fastai==2.6.3
 energyflow==1.3.2
+transformers==4.19.2
+evaluate==0.1.0
+nltk
