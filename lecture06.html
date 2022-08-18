@@ -1,0 +1,1200 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Lecture 6 - Generating hep-ph titles with Transformers &#8212; Deep Learning for Particle Physicists</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Lecture 5 - Convolutional neural networks" href="lecture05.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Deep Learning for Particle Physicists</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Deep Learning for Particle Physicists
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture01.html">
+   Lecture 1 - Jet tagging with neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture02.html">
+   Lecture 2 - Gradient descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture03.html">
+   Lecture 3 - Neural network deep dive
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture04.html">
+   Lecture 4 - Jet images and transfer learning with CNNs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture05.html">
+   Lecture 5 - Convolutional neural networks
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Lecture 6 - Generating hep-ph titles with Transformers
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/lewtun/dl4phys/blob/main/lecture06.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/lewtun/dl4phys"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/lecture06.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Lecture 6 - Generating hep-ph titles with Transformers
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-objectives">
+   Learning objectives
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-data">
+   Loading the data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-text-to-tokens">
+   From text to tokens
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-a-pretrained-model">
+   Loading a pretrained model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-trainer">
+   Creating a Trainer
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-your-fine-tuned-model">
+   Using your fine-tuned model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Lecture 6 - Generating hep-ph titles with Transformers</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Lecture 6 - Generating hep-ph titles with Transformers
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-objectives">
+   Learning objectives
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-data">
+   Loading the data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-text-to-tokens">
+   From text to tokens
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-a-pretrained-model">
+   Loading a pretrained model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-trainer">
+   Creating a Trainer
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-your-fine-tuned-model">
+   Using your fine-tuned model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="lecture-6-generating-hep-ph-titles-with-transformers">
+<h1>Lecture 6 - Generating hep-ph titles with Transformers<a class="headerlink" href="#lecture-6-generating-hep-ph-titles-with-transformers" title="Permalink to this headline">#</a></h1>
+<blockquote>
+<div><p>Too lazy to think of a catchy title for your next paper? Then this lecture is for you!</p>
+</div></blockquote>
+</section>
+<section id="learning-objectives">
+<h1>Learning objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Gain hands-on experience using the Hugging Face Transformers library</p></li>
+<li><p>Understand how to prepare and tokenizer a text dataset for Transformer models</p></li>
+<li><p>Learn how to fine-tune a Transformer for text summarization and how to evaluate it’s performance</p></li>
+</ul>
+<p>Understanding the main steps involved in fine-tuning Transformers for NLP, will put you in good stead to understand advanced particle physics applications such as the <a class="reference external" href="https://arxiv.org/abs/2202.03772">Particle Transformer</a>.</p>
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Chapter 6 of <a class="reference external" href="https://transformersbook.com/"><em>Natural Language Processing with Transformers</em></a> by L. Tunstall, L. von Werra, and T. Wolf</p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/1905.00075"><em>On the Use of ArXiv as a Dataset</em></a> by C. Clement et al.</p></li>
+</ul>
+</section>
+<section id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment and run this cell if using Colab, Kaggle etc</span>
+<span class="c1"># %pip install transformers datasets evaluate rouge_score nltk</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To be able to share your model with the community there are a few more steps to follow.</p>
+<p>First you have to store your authentication token from the Hugging Face website (sign up here if you haven’t already!) then execute the following cell and input your username and password:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">huggingface_hub</span> <span class="kn">import</span> <span class="n">notebook_login</span>
+
+<span class="n">notebook_login</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then you need to install Git-LFS. Uncomment and execute the following cell:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !apt install git-lfs</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="imports">
+<h1>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span> <span class="nn">evaluate</span> <span class="kn">import</span> <span class="n">load</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AutoModelForSeq2SeqLM</span><span class="p">,</span>
+    <span class="n">AutoTokenizer</span><span class="p">,</span>
+    <span class="n">DataCollatorForSeq2Seq</span><span class="p">,</span>
+    <span class="n">Seq2SeqTrainer</span><span class="p">,</span>
+    <span class="n">Seq2SeqTrainingArguments</span><span class="p">,</span>
+    <span class="n">pipeline</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datasets</span>
+
+<span class="c1"># Suppress logs to keep things tidy</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">set_verbosity_error</span><span class="p">()</span>
+<span class="c1"># Download special package for computing metrics</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;punkt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package punkt to /home/lewis/nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loading-the-data">
+<h1>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this headline">#</a></h1>
+<p>Until now, we’ve been using the Top Tagging Dataset to explore various neural network architectures, from MLPs to CNNs. Today we’ll do something completely different and explore an application of Transformers to a natural language processing (NLP) task called <em>text summarization</em>! As the name suggests, text summarization involves condensing long documents into crips summaries. To give the task a physics flavour, we’ll use a dump of arXiv hep-ph papers and train a model to summarise the abstract into a title. This way, the next time you’re lacking inspiration on your next big paper, you can just get the model to cook it up for you!</p>
+<p>To get started, we’ll need a dataset of arXiv papers. Fortunately, someone from the community has uploaded a dump of papers to the Hugging Face Hub, so we can download it using the familiar <code class="docutils literal notranslate"><span class="pre">load_dataset()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;gfissore/arxiv-abstracts-2021&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">raw_dataset</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset({
+    features: [&#39;id&#39;, &#39;submitter&#39;, &#39;authors&#39;, &#39;title&#39;, &#39;comments&#39;, &#39;journal-ref&#39;, &#39;doi&#39;, &#39;abstract&#39;, &#39;report-no&#39;, &#39;categories&#39;, &#39;versions&#39;],
+    num_rows: 1999486
+})
+</pre></div>
+</div>
+</div>
+</div>
+<p>Okay, this is quite a lot of papers! Let’s take a look at one example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;id&#39;: &#39;0704.0001&#39;,
+ &#39;submitter&#39;: &#39;Pavel Nadolsky&#39;,
+ &#39;authors&#39;: &quot;C. Bal\\&#39;azs, E. L. Berger, P. M. Nadolsky, C.-P. Yuan&quot;,
+ &#39;title&#39;: &#39;Calculation of prompt diphoton production cross sections at Tevatron and\n  LHC energies&#39;,
+ &#39;comments&#39;: &#39;37 pages, 15 figures; published version&#39;,
+ &#39;journal-ref&#39;: &#39;Phys.Rev.D76:013009,2007&#39;,
+ &#39;doi&#39;: &#39;10.1103/PhysRevD.76.013009&#39;,
+ &#39;abstract&#39;: &#39;  A fully differential calculation in perturbative quantum chromodynamics is\npresented for the production of massive photon pairs at hadron colliders. All\nnext-to-leading order perturbative contributions from quark-antiquark,\ngluon-(anti)quark, and gluon-gluon subprocesses are included, as well as\nall-orders resummation of initial-state gluon radiation valid at\nnext-to-next-to-leading logarithmic accuracy. The region of phase space is\nspecified in which the calculation is most reliable. Good agreement is\ndemonstrated with data from the Fermilab Tevatron, and predictions are made for\nmore detailed tests with CDF and DO data. Predictions are shown for\ndistributions of diphoton pairs produced at the energy of the Large Hadron\nCollider (LHC). Distributions of the diphoton pairs from the decay of a Higgs\nboson are contrasted with those produced from QCD processes at the LHC, showing\nthat enhanced sensitivity to the signal can be obtained with judicious\nselection of events.\n&#39;,
+ &#39;report-no&#39;: &#39;ANL-HEP-PR-07-12&#39;,
+ &#39;categories&#39;: [&#39;hep-ph&#39;],
+ &#39;versions&#39;: [&#39;v1&#39;, &#39;v2&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that each example consists of an <code class="docutils literal notranslate"><span class="pre">abstract</span></code> and <code class="docutils literal notranslate"><span class="pre">title</span></code>, along with various metadata about the submission. To keep things focused, let’s filter the dataset for just those papers which have a <code class="docutils literal notranslate"><span class="pre">hep-ph</span></code> category. To do so, we can use the <code class="docutils literal notranslate"><span class="pre">filter()</span></code> method in the <code class="docutils literal notranslate"><span class="pre">datasets</span></code> library. This method applies a boolean function to every row in the dataset, and removes rows where the function evaluates to false. In our case, we’re interested in the <code class="docutils literal notranslate"><span class="pre">categories</span></code> column, so let’s check how many hep-ph papers we have:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;hep-ph&quot;</span>
+<span class="n">hep_dataset</span> <span class="o">=</span> <span class="n">raw_dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">])</span>
+<span class="n">hep_dataset</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset({
+    features: [&#39;id&#39;, &#39;submitter&#39;, &#39;authors&#39;, &#39;title&#39;, &#39;comments&#39;, &#39;journal-ref&#39;, &#39;doi&#39;, &#39;abstract&#39;, &#39;report-no&#39;, &#39;categories&#39;, &#39;versions&#39;],
+    num_rows: 76022
+})
+</pre></div>
+</div>
+</div>
+</div>
+<p>Great, this is a much more manageable dataset to work with! As a sanity check, you can pick your name or that of a colleague to see if any relevant papers are found in the corpus:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;tunstall&quot;</span>
+<span class="n">sample_dataset</span> <span class="o">=</span> <span class="n">hep_dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;tunstall&quot;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;authors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">sample_dataset</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Title: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Authors: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;authors&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Abstract: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;abstract&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Title: Infrared Fixed Point in the Strong Running Coupling: Unraveling the
+  \Delta I=1/2 puzzle in K-Decays 
+
+Authors: R.J. Crewther and Lewis C. Tunstall 
+
+Abstract:   In this talk, we present an explanation for the Delta I = 1/2 rule in
+K-decays based on the premise of an infrared fixed point alpha_IR in the
+running coupling alpha_s of quantum chromodynamics (QCD) for three light quarks
+u,d,s. At the fixed point, the quark condensate spontaneously breaks scale and
+chiral SU(3)_L x SU(3)_R symmetry. Consequently, the low-lying spectrum
+contains nine Nambu-Goldstone bosons: pi,K,eta and a QCD dilaton sigma. We
+identify sigma as the f_0(500) resonance and construct a chiral-scale
+perturbation theory CHPT_sigma for low-energy amplitudes expanded in alpha_s
+about alpha_IR. The Delta I = 1/2 rule emerges in the leading order of
+CHPT_sigma through a sigma-pole term K_S --&gt; sigma --&gt; 2 pi, with a K_S-sigma
+coupling fixed by data on 2 gamma --&gt; 2 pi^0 and K_S --&gt; 2 gamma. We also
+determine R_IR ~ 5 for the nonperturbative Drell-Yan ratio at alpha_IR.
+
+================================================== 
+
+Title: Next-to-Minimal SOFTSUSY 
+
+Authors: B.C. Allanach, P. Athron, Lewis C. Tunstall, A. Voigt, A.G. Williams 
+
+Abstract:   We describe an extension to the SOFTSUSY program that provides for the
+calculation of the sparticle spectrum in the Next-to-Minimal Supersymmetric
+Standard Model (NMSSM), where a chiral superfield that is a singlet of the
+Standard Model gauge group is added to the Minimal Supersymmetric Standard
+Model (MSSM) fields. Often, a $\mathbb{Z}_{3}$ symmetry is imposed upon the
+model. SOFTSUSY can calculate the spectrum in this case as well as the case
+where general $\mathbb{Z}_{3}$ violating (denoted as
+$\,\mathbf{\backslash}\mkern-11.0mu{\mathbb{Z}}_{3}$) terms are added to the
+soft supersymmetry breaking terms and the superpotential. The user provides a
+theoretical boundary condition for the couplings and mass terms of the singlet.
+Radiative electroweak symmetry breaking data along with electroweak and CKM
+matrix data are used as weak-scale boundary conditions. The renormalisation
+group equations are solved numerically between the weak scale and a high energy
+scale using a nested iterative algorithm. This paper serves as a manual to the
+NMSSM mode of the program, detailing the approximations and conventions used.
+
+================================================== 
+</pre></div>
+</div>
+</div>
+</div>
+<p>These look like hep-ph papers, so now let’s process the raw text in the abstracts and titles into a format that’s suitable for neural networks!</p>
+</section>
+<section id="from-text-to-tokens">
+<h1>From text to tokens<a class="headerlink" href="#from-text-to-tokens" title="Permalink to this headline">#</a></h1>
+<p>Like other machine learning models, Transformers expect their inputs in the form of numbers (not strings) and so some form of preprocessing is required. For NLP, this preprocessing step is called tokenization. Tokenization converts strings into atomic chunks called tokens, and these tokens are subsequently encoded as numerical vectors.</p>
+<p>For more information about tokenizers, check out the following video:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s2">&quot;VFp38yj8h3A&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="600"
+    height="400"
+    src="https://www.youtube.com/embed/VFp38yj8h3A"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+</div></div>
+</div>
+<p>Each pretrained model comes with its own tokenizer, so to get started let’s download the tokenizer of a popular model called T5 from the Hub:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_checkpoint</span> <span class="o">=</span> <span class="s2">&quot;t5-small&quot;</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_checkpoint</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/lewis/miniconda3/envs/dl4phys/lib/python3.9/site-packages/transformers/models/t5/tokenization_t5_fast.py:155: FutureWarning: This tokenizer was incorrectly instantiated with a model max length of 512 which will be corrected in Transformers v5.
+For now, this behavior is kept to avoid breaking backwards compatibility when padding/encoding with `truncation is True`.
+- Be aware that you SHOULD NOT rely on t5-small automatically truncating your input to 512 when padding/encoding.
+- If you want to encode/pad to sequences longer than 512 you can either instantiate this tokenizer with `model_max_length` or pass `max_length` when encoding/padding.
+- To avoid this warning, please instantiate this tokenizer with `model_max_length` set to your preferred value.
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<p>The tokenizer has a few interesting attributes such as the vocabulary size:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tokenizer</span><span class="o">.</span><span class="n">vocab_size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32100
+</pre></div>
+</div>
+</div>
+</div>
+<p>This tells us that T5 has 32,100 tokens that is can use to represent text with. Some of the tokens are called special tokens to indicate whether a token is the start or end of a sentence, or corresponds to the mask that is associated with language modeling.</p>
+<p>When you feed strings to the tokenizer, you’ll get at least two fields (some models have more, depending on how they’re trained):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_ids</span></code>: These correspond to the numerical encodings that map each token to an integer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attention_mask</span></code>: This indicates to the model which tokens should be ignored when computing self-attention</p></li>
+</ul>
+<p>Let’s see how this works with a simple example. First we encode the string:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoded_str</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="s2">&quot;Albert Einstein lived in Bern&quot;</span><span class="p">)</span>
+<span class="n">encoded_str</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;input_ids&#39;: [11375, 890, 4008, 4114, 16, 8942, 1], &#39;attention_mask&#39;: [1, 1, 1, 1, 1, 1, 1]}
+</pre></div>
+</div>
+</div>
+</div>
+<p>and then decode the input IDs to see the mapping explicitly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">encoded_str</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">([</span><span class="n">token</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11375 Albert
+890 Ein
+4008 stein
+4114 lived
+16 in
+8942 Bern
+1 &lt;/s&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>So to prepare our inputs, we simply need to apply the tokenizer to each example in our corpus. The only subtlety is that our targets are the paper titles, and these are also strings! So, we’ll also need to tokenize them as well. The following function takes care of both these preprocessing steps:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_input_length</span> <span class="o">=</span> <span class="mi">1024</span>  <span class="c1"># Truncate abstracts longer than this</span>
+<span class="n">max_target_length</span> <span class="o">=</span> <span class="mi">128</span>  <span class="c1"># Truncate titles longer than this</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;summarize: &quot;</span>  <span class="c1"># A special feature of T5 to indicate which task to condition the model on</span>
+
+
+<span class="k">def</span> <span class="nf">preprocess_function</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">doc</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">[</span><span class="s2">&quot;abstract&quot;</span><span class="p">]]</span>
+    <span class="n">model_inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="n">max_input_length</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Setup the tokenizer for targets</span>
+    <span class="k">with</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">as_target_tokenizer</span><span class="p">():</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span>
+            <span class="n">examples</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">],</span> <span class="n">max_length</span><span class="o">=</span><span class="n">max_target_length</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+    <span class="n">model_inputs</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">model_inputs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With this function we can tokenize the whole dataset with a <code class="docutils literal notranslate"><span class="pre">map()</span></code> operation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tokenized_dataset</span> <span class="o">=</span> <span class="n">hep_dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+    <span class="n">preprocess_function</span><span class="p">,</span> <span class="n">batched</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">remove_columns</span><span class="o">=</span><span class="n">hep_dataset</span><span class="o">.</span><span class="n">column_names</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we’ve tokenized our corpus, it’s time to load a pretrained model!</p>
+</section>
+<section id="loading-a-pretrained-model">
+<h1>Loading a pretrained model<a class="headerlink" href="#loading-a-pretrained-model" title="Permalink to this headline">#</a></h1>
+<p>To load a pretrained model from the Hub is quite simple: just select the appropriate <code class="docutils literal notranslate"><span class="pre">AutoModelForXxx</span></code> class and use the <code class="docutils literal notranslate"><span class="pre">from_pretrained()</span></code> function with the model checkpoint. In our case, we’re dealing with a sequence-to-sequence task (mapping abstracts to titles), so the corresponding autoclass is as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_checkpoint</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>These warnings are perfectly normal - they are telling us that the weights in the head of the network are randomly initialised and so we should fine-tune the model on a downstream task.</p>
+<p>Now that we have a model, the next step is to initialise a <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> that will take care of the training loop for us (similar to the <code class="docutils literal notranslate"><span class="pre">Learner</span></code> in fastai). Let’s do that next.</p>
+</section>
+<section id="creating-a-trainer">
+<h1>Creating a Trainer<a class="headerlink" href="#creating-a-trainer" title="Permalink to this headline">#</a></h1>
+<p>To create a <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>, we usually need a few basic ingredients:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">TrainingArguments</span></code> class to define all the hyperparameters</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">compute_metrics()</span></code> function to compute metrics during evaluation</p></li>
+<li><p>Datasets to train and evaluate on</p></li>
+</ul>
+<p>For more information about the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> check out the following video:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s2">&quot;nvBXf7s7vTI&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="600"
+    height="400"
+    src="https://www.youtube.com/embed/nvBXf7s7vTI"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+</div></div>
+</div>
+<p>Let’s start with the <code class="docutils literal notranslate"><span class="pre">TrainingArguments</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="n">model_checkpoint</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">Seq2SeqTrainingArguments</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">-finetuned-arxiv&quot;</span><span class="p">,</span>
+    <span class="n">overwrite_output_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">evaluation_strategy</span><span class="o">=</span><span class="s2">&quot;epoch&quot;</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">2e-5</span><span class="p">,</span>
+    <span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+    <span class="n">per_device_eval_batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">save_steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">predict_with_generate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fp16</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">push_to_hub</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we’ve defined output_dir to save our checkpoints and tweaked some of the default hyperparameters like the learning rate and weight decay. The push_to_hub argument will push each checkpoint to the Hub automatically for us, so we can reuse the model at any point in the future!</p>
+<p>Now that we’ve defined the hyperparameters, the next step is to define the metrics. Measuring the performance of text generation tasks like summarization or translation is not as straightforward as classification/regression tasks. For example, given a review like “I loved reading the Hunger Games”, there are multiple valid summaries, like “I loved the Hunger Games” or “Hunger Games is a great read”. Clearly, applying some sort of exact match between the generated summary and the label is not a good solution — even humans would fare poorly under such a metric, because we all have our own writing style.</p>
+<p>For summarization, one of the most commonly used metrics is the ROUGE score (short for Recall-Oriented Understudy for Gisting Evaluation). The basic idea behind this metric is to compare a generated summary against a set of reference summaries that are typically created by humans. If you want to learn more about this metric, check out the video below - for now it is enough to know that higher ROUGE scores are associated with “better” summaries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s2">&quot;TMshhnrEXlg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="600"
+    height="400"
+    src="https://www.youtube.com/embed/TMshhnrEXlg"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+</div></div>
+</div>
+<p>To load a metric, we’ll use the <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> library which hosts a wide variety of metrics for machine learning. To load a metric is quite simple:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metric</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s2">&quot;rouge&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Couldn&#39;t find a directory or a metric named &#39;rouge&#39; in this version. It was picked from the master branch on github instead.
+</pre></div>
+</div>
+</div>
+</div>
+<p>And once we have a metric, we can now compute the ROUGE scores using the <code class="docutils literal notranslate"><span class="pre">compute()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">generated_summary</span> <span class="o">=</span> <span class="s2">&quot;I absolutely loved reading the Hunger Games&quot;</span>
+<span class="n">reference_summary</span> <span class="o">=</span> <span class="s2">&quot;I loved reading the Hunger Games&quot;</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">predictions</span><span class="o">=</span><span class="p">[</span><span class="n">generated_summary</span><span class="p">],</span> <span class="n">references</span><span class="o">=</span><span class="p">[</span><span class="n">reference_summary</span><span class="p">])</span>
+<span class="n">scores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;rouge1&#39;: AggregateScore(low=Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923), mid=Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923), high=Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923)),
+ &#39;rouge2&#39;: AggregateScore(low=Score(precision=0.6666666666666666, recall=0.8, fmeasure=0.7272727272727272), mid=Score(precision=0.6666666666666666, recall=0.8, fmeasure=0.7272727272727272), high=Score(precision=0.6666666666666666, recall=0.8, fmeasure=0.7272727272727272)),
+ &#39;rougeL&#39;: AggregateScore(low=Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923), mid=Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923), high=Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923)),
+ &#39;rougeLsum&#39;: AggregateScore(low=Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923), mid=Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923), high=Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923))}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Whoa, there’s a lot of information in that output — what does it all mean? First, <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> actually computes confidence intervals for precision, recall, and F1-score; these are the low, mid, and high attributes you can see here. Moreover, <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> computes a variety of ROUGE scores which are based on different types of text granularity when comparing the generated and reference summaries. The rouge1 variant is the overlap of unigrams — this is just a fancy way of saying the overlap of words and is exactly the metric we’ve discussed above. To verify this, let’s pull out the mid value of our scores:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;rouge1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Score(precision=0.8571428571428571, recall=1.0, fmeasure=0.923076923076923)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now what about those other ROUGE scores? rouge2 measures the overlap between bigrams (think the overlap of pairs of words), while rougeL and rougeLsum measure the longest matching sequences of words by looking for the longest common substrings in the generated and reference summaries. The “sum” in rougeLsum refers to the fact that this metric is computed over a whole summary, while rougeL is computed as the average over individual sentences.</p>
+<p>Next, let’s define the <code class="docutils literal notranslate"><span class="pre">compute_metrics()</span></code> function that we’ll use to evaluate our model. For summarization this is a bit more involved than simply calling <code class="docutils literal notranslate"><span class="pre">metric.compute()</span></code> on the model’s predictions, since we need to decode the outputs and labels into text before we can compute the ROUGE scores. The following function does exactly that, and also makes use of the <code class="docutils literal notranslate"><span class="pre">sent_tokenize()</span></code> function from nltk to separate the summary sentences with newlines:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_metrics</span><span class="p">(</span><span class="n">eval_pred</span><span class="p">):</span>
+    <span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">eval_pred</span>
+    <span class="n">decoded_preds</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">batch_decode</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Replace -100 in the labels as we can&#39;t decode them.</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">labels</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">)</span>
+    <span class="n">decoded_labels</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">batch_decode</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Rouge expects a newline after each sentence</span>
+    <span class="n">decoded_preds</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">pred</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="n">decoded_preds</span>
+    <span class="p">]</span>
+    <span class="n">decoded_labels</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">decoded_labels</span>
+    <span class="p">]</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span>
+        <span class="n">predictions</span><span class="o">=</span><span class="n">decoded_preds</span><span class="p">,</span> <span class="n">references</span><span class="o">=</span><span class="n">decoded_labels</span><span class="p">,</span> <span class="n">use_stemmer</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="c1"># Extract a few results</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">fmeasure</span> <span class="o">*</span> <span class="mi">100</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="c1"># Add mean generated length</span>
+    <span class="n">prediction_lens</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">pred</span> <span class="o">!=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="n">predictions</span>
+    <span class="p">]</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;gen_len&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">prediction_lens</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we need to define a data collator for our sequence-to-sequence task. Since T5 is an encoder-decoder Transformer model, one subtlety with preparing our batches is that during decoding we need to shift the labels to the right by one. This is required to ensure that the decoder only sees the previous ground truth labels and not the current or future ones, which would be easy for the model to memorize. This is similar to how masked self-attention is applied to the inputs in a task like causal language modeling.</p>
+<p>Luckily, 🤗 Transformers provides a <code class="docutils literal notranslate"><span class="pre">DataCollatorForSeq2Seq</span></code> collator that will dynamically pad the inputs and the labels for us. To instantiate this collator, we simply need to provide the tokenizer and model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_collator</span> <span class="o">=</span> <span class="n">DataCollatorForSeq2Seq</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We finally have all the ingredients we need to train with! We now simply need to create a train and test split and instantiate the trainer with the standard arguments:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> TOKENIZERS_PARALLELISM=false
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>env: TOKENIZERS_PARALLELISM=false
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tokenized_datasets</span> <span class="o">=</span> <span class="n">tokenized_dataset</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span> <span class="o">=</span> <span class="n">Seq2SeqTrainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">args</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">tokenized_datasets</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="n">tokenized_datasets</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">],</span>
+    <span class="n">data_collator</span><span class="o">=</span><span class="n">data_collator</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">compute_metrics</span><span class="o">=</span><span class="n">compute_metrics</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The only thing left to do is launch our training run:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/lewis/miniconda3/envs/dl4phys/lib/python3.9/site-packages/transformers/optimization.py:306: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+***** Running training *****
+  Num examples = 57016
+  Num Epochs = 1
+  Instantaneous batch size per device = 16
+  Total train batch size (w. parallel, distributed &amp; accumulation) = 16
+  Gradient Accumulation steps = 1
+  Total optimization steps = 3564
+</pre></div>
+</div>
+<div class="output text_html">
+    <div>
+
+      <progress value='3564' max='3564' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      [3564/3564 10:19, Epoch 1/1]
+    </div>
+    <table border="1" class="dataframe">
+  <thead>
+ <tr style="text-align: left;">
+      <th>Epoch</th>
+      <th>Training Loss</th>
+      <th>Validation Loss</th>
+      <th>Rouge1</th>
+      <th>Rouge2</th>
+      <th>Rougel</th>
+      <th>Rougelsum</th>
+      <th>Gen Len</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>2.382500</td>
+      <td>2.155587</td>
+      <td>37.851500</td>
+      <td>20.438100</td>
+      <td>34.011400</td>
+      <td>34.004200</td>
+      <td>15.821400</td>
+    </tr>
+  </tbody>
+</table><p></div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving model checkpoint to t5-small-finetuned-arxiv/checkpoint-2000
+Configuration saved in t5-small-finetuned-arxiv/checkpoint-2000/config.json
+Model weights saved in t5-small-finetuned-arxiv/checkpoint-2000/pytorch_model.bin
+tokenizer config file saved in t5-small-finetuned-arxiv/checkpoint-2000/tokenizer_config.json
+Special tokens file saved in t5-small-finetuned-arxiv/checkpoint-2000/special_tokens_map.json
+tokenizer config file saved in t5-small-finetuned-arxiv/tokenizer_config.json
+Special tokens file saved in t5-small-finetuned-arxiv/special_tokens_map.json
+***** Running Evaluation *****
+  Num examples = 19006
+  Batch size = 16
+
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TrainOutput(global_step=3564, training_loss=2.4908802747458854, metrics={&#39;train_runtime&#39;: 619.9777, &#39;train_samples_per_second&#39;: 91.965, &#39;train_steps_per_second&#39;: 5.749, &#39;total_flos&#39;: 6193120296566784.0, &#39;train_loss&#39;: 2.4908802747458854, &#39;epoch&#39;: 1.0})
+</pre></div>
+</div>
+</div>
+</div>
+<p>The final thing to do is push the model weights to the Hub, as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">push_to_hub</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-your-fine-tuned-model">
+<h1>Using your fine-tuned model<a class="headerlink" href="#using-your-fine-tuned-model" title="Permalink to this headline">#</a></h1>
+<p>Now that we’ve pushed our model to the Hub, let’s see how it fares on some abstracts that it’s never seen before! First, we’ll load the model using the <code class="docutils literal notranslate"><span class="pre">pipeline()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summarizer</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;summarization&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;lewtun/t5-small-finetuned-arxiv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And then we can feed it an abstract to summarise:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from https://arxiv.org/abs/2206.00678</span>
+<span class="n">abstract</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;We demonstrate that the observed cosmological excess of matter over antimatter</span>
+<span class="s2">may originate from a heavy QCD axion that solves the strong CP problem but has a</span>
+<span class="s2">mass much larger than that given by the Standard Model QCD strong dynamics. We</span>
+<span class="s2">investigate a rotation of the heavy QCD axion in field space, which is</span>
+<span class="s2">transferred into a baryon asymmetry through weak and strong sphaleron processes.</span>
+<span class="s2">This provides a strong cosmological motivation for heavy QCD axions, which are</span>
+<span class="s2">of high experimental interest. The viable parameter space has an axion mass ma</span>
+<span class="s2">between 1~MeV and 10 GeV and a decay constant fa&lt;105 GeV, which can be probed by</span>
+<span class="s2">accelerator-based direct axion searches and observations of the cosmic microwave</span>
+<span class="s2">background.&quot;&quot;&quot;</span>
+
+<span class="n">summarizer</span><span class="p">(</span><span class="n">abstract</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Your max_length is set to 200, but you input_length is only 177. You might consider decreasing max_length manually, e.g. summarizer(&#39;...&#39;, max_length=88)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;summary_text&#39;: &#39;Heavy QCD axions in a baryon asymmetry through weak and strong sphaleron processes and a decay constant fa105 GeV&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The original title is <em>Axiogenesis with a Heavy QCD Axion</em>, so our model has done a pretty good job!</p>
+</section>
+<section id="exercises">
+<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Try fine-tuning the model on a different arXiv category like hep-lat. Do the generated titles still make sense?</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="lecture05.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Lecture 5 - Convolutional neural networks</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Lewis Tunstall<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

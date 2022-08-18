@@ -1,0 +1,1397 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Lecture 5 - Convolutional neural networks &#8212; Deep Learning for Particle Physicists</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Lecture 6 - Generating hep-ph titles with Transformers" href="lecture06.html" />
+    <link rel="prev" title="Lecture 4 - Jet images and transfer learning with CNNs" href="lecture04.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Deep Learning for Particle Physicists</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Deep Learning for Particle Physicists
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture01.html">
+   Lecture 1 - Jet tagging with neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture02.html">
+   Lecture 2 - Gradient descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture03.html">
+   Lecture 3 - Neural network deep dive
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture04.html">
+   Lecture 4 - Jet images and transfer learning with CNNs
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Lecture 5 - Convolutional neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture06.html">
+   Lecture 6 - Generating hep-ph titles with Transformers
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/lewtun/dl4phys/blob/main/lecture05.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/lewtun/dl4phys"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/lecture05.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Lecture 5 - Convolutional neural networks
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-objectives">
+   Learning objectives
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-data">
+   Loading the data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-cnn">
+   Creating a CNN
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#debugging-training-with-activation-statistics">
+   Debugging training with activation statistics
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#increasing-the-batch-size">
+     Increasing the batch size
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cycle-training">
+     1-cycle training
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#batch-normalization">
+     Batch normalization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Lecture 5 - Convolutional neural networks</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Lecture 5 - Convolutional neural networks
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-objectives">
+   Learning objectives
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-data">
+   Loading the data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-cnn">
+   Creating a CNN
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#debugging-training-with-activation-statistics">
+   Debugging training with activation statistics
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#increasing-the-batch-size">
+     Increasing the batch size
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cycle-training">
+     1-cycle training
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#batch-normalization">
+     Batch normalization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="lecture-5-convolutional-neural-networks">
+<h1>Lecture 5 - Convolutional neural networks<a class="headerlink" href="#lecture-5-convolutional-neural-networks" title="Permalink to this headline">#</a></h1>
+<blockquote>
+<div><p>A deep dive into convolutional neural networks for jet tagging</p>
+</div></blockquote>
+</section>
+<section id="learning-objectives">
+<h1>Learning objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Know how to implement and train a convolutional neural network in PyTorch</p></li>
+<li><p>Learn how to debug unstable training runs with activation statistics</p></li>
+<li><p>Understand what the 1-cycle training policy is</p></li>
+<li><p>Understand what batch normalization is and how to incorporate it into a CNN</p></li>
+</ul>
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Chapter 13 of <a class="reference external" href="https://github.com/fastai/fastbook"><em>Deep Learning for Coders with fastai &amp; PyTorch</em></a> by Jeremy Howard and Sylvain Gugger.</p></li>
+<li><p>Chapter 11 of <a class="reference external" href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646/ref=sr_1_1?crid=29Z1GSCOWEPDV&amp;keywords=hands+on+machine+learning+with+scikit-learn+and+tensorflow+2&amp;qid=1653288575&amp;sprefix=hands+on+ma%2Caps%2C160&amp;sr=8-1"><em>Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow</em></a> by Aurélien Geron</p></li>
+</ul>
+</section>
+<section id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment and run this cell if using Colab, Kaggle etc</span>
+<span class="c1"># %pip install fastai==2.6.0 datasets</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="imports">
+<h1>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span> <span class="nn">fastai.callback.hook</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">TensorDataset</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datasets</span>
+
+<span class="c1"># Suppress logs to keep things tidy</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">set_verbosity_error</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loading-the-data">
+<h1>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this headline">#</a></h1>
+<p>Last lecture we fine-tuned a pretrained CNN on the top tagging dataset, where each jet was represented as a 2D image of “energy pixels”. Today, we’ll take a look at training our own CNN from scratch, and explore some of the techniques that fastai utilizes to stabilise the training of these neural nets. To get started, let’s download the same dataset of jet images from last lecture:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">images_ds</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;dl4phys/top_tagging_images&quot;</span><span class="p">)</span>
+
+<span class="c1"># Peek at one example</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">images_ds</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "9f75ae7e9089413bb5de76b999c332af", "version_major": 2, "version_minor": 0}
+</script><img alt="_images/lecture05_11_1.png" src="_images/lecture05_11_1.png" />
+</div>
+</div>
+<p>As we saw last lecture, we need to convert these PIL images into PyTorch tensors, so let’s reuse the same helper function to create a training and validation set to experiment with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">num_examples</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num_examples</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_examples</span><span class="p">))</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]])</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]])</span>
+
+    <span class="k">return</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With this function, we can now generate a sample of jets as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lower the training size if Colab RAM explodes 💣</span>
+<span class="n">train_ds</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">images_ds</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">num_examples</span><span class="o">=</span><span class="mi">350_000</span><span class="p">)</span>
+<span class="n">valid_ds</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">images_ds</span><span class="p">[</span><span class="s2">&quot;validation&quot;</span><span class="p">],</span> <span class="n">num_examples</span><span class="o">=</span><span class="mi">35_000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since we’ll be experimenting a bit with the batch size in this lecture, we’ll also implement a helper function to return the dataloaders associated with these datasets:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_dls</span><span class="p">(</span><span class="n">bs</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="n">train_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_ds</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="n">bs</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">valid_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">valid_ds</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="n">bs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">DataLoaders</span><span class="p">(</span><span class="n">train_dl</span><span class="p">,</span> <span class="n">valid_dl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have this function, we can get the dataloaders and grab a batch of data to test with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dls</span> <span class="o">=</span> <span class="n">get_dls</span><span class="p">()</span>
+
+<span class="n">xb</span><span class="p">,</span> <span class="n">yb</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">dls</span><span class="o">.</span><span class="n">train</span><span class="p">)</span>
+<span class="n">xb</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">yb</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(torch.Size([128, 1, 40, 40]), torch.Size([128]))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-a-cnn">
+<h1>Creating a CNN<a class="headerlink" href="#creating-a-cnn" title="Permalink to this headline">#</a></h1>
+<p>Recall in lecture 3, that we created a neural network for <span class="math notranslate nohighlight">\(N\)</span>-subjettiness features. We used the <code class="docutils literal notranslate"><span class="pre">nn.Sequential()</span></code> class to create a network that involved stacking fully-connected layers and ReLU activation functions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): Linear(in_features=20, out_features=200, bias=True)
+  (1): ReLU()
+  (2): Linear(in_features=200, out_features=2, bias=True)
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this lecture, we’ll take a similar approach, but this time using <em>convolutional layers</em> instead of linear ones. In PyTorch, convolutional layers are created by using the <code class="docutils literal notranslate"><span class="pre">nn.Conv2d()</span></code> module. Let’s try replacing the <code class="docutils literal notranslate"><span class="pre">nn.Linear()</span></code> layers in our previous architecture with <code class="docutils literal notranslate"><span class="pre">nn.Conv2d()</span></code> ones instead:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">broken_cnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that unlike linear layers, convolutional layers don’t require us to specify the number of features in the input. That’s because convolutions are applied across each pixel automatically, so the weights only depend on the number of channels and the kernel size.</p>
+<p>Let’s now see what happens if we pass a minibatch of data through this model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feed a minibatch to the model</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">broken_cnn</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
+<span class="n">outputs</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([128, 1, 40, 40])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Hmm, this output isn’t quite what we want for classification: we need a tensor of shape <code class="docutils literal notranslate"><span class="pre">(batch_size,</span> <span class="pre">num_classes)</span></code> but instead have a <span class="math notranslate nohighlight">\(40\times 40\)</span> map of activations. The standard way to handle this is to apply a sequence of <em>stride-2 convolutions</em>, which decrease the size of the outputs so that the final layer size is 1. To see why this is the case, recall that for an image of height <span class="math notranslate nohighlight">\(n_H\)</span> and width <span class="math notranslate nohighlight">\(n_W\)</span>, the dimension of the output activation map is given by:</p>
+<div class="math notranslate nohighlight">
+\[\left( \left\lfloor\frac{n_H + 2p - k}{s} + 1 \right\rfloor ,  \left\lfloor\frac{n_W + 2p - k}{s} + 1 \right\rfloor \right) \,,\]</div>
+<p>where <span class="math notranslate nohighlight">\(p\)</span> is the padding, <span class="math notranslate nohighlight">\(k\)</span> the kernel of size <span class="math notranslate nohighlight">\(k\times k\)</span>, and <span class="math notranslate nohighlight">\(s\)</span> the stride. For fixed <span class="math notranslate nohighlight">\(p,f\)</span> and <span class="math notranslate nohighlight">\(s&gt;1\)</span>, we can see that the dimension of the activation map is shrunk with each convolutional layer.</p>
+<p>With this in mind, let’s create a stack of stride-2 convolutional layers with <span class="math notranslate nohighlight">\(3\times 3\)</span> kernels. We’ll intersperse each convolutional layer with a ReLU activation, so let’s write a helper function that returns the two together:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">conv</span><span class="p">(</span><span class="n">ni</span><span class="p">,</span> <span class="n">nf</span><span class="p">,</span> <span class="n">ks</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">ni</span><span class="p">,</span> <span class="n">nf</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">ks</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="n">ks</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">act</span><span class="p">:</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">layer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As discussed in the fastai book, it’s good practice to increase the number of output features <code class="docutils literal notranslate"><span class="pre">nf</span></code> with each convolutional layer. That’s because, stride-2 convolutions decrease the size of the activation map, so we increase the number of output features to avoid compressing the capacity of our model. We also set the kernel size <code class="docutils literal notranslate"><span class="pre">ks</span></code> to the typical value of <span class="math notranslate nohighlight">\(3\times 3\)</span>, and set the padding to <span class="math notranslate nohighlight">\(ks//2\)</span> to ensure the output activation map is the same shape as the input image.</p>
+<p>We can now build a CNN by stacking the <code class="docutils literal notranslate"><span class="pre">conv()</span></code> function until we reach a <span class="math notranslate nohighlight">\(1\times 1\)</span> activation map:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simple_cnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">conv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>  <span class="c1"># 20x20</span>
+    <span class="n">conv</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>  <span class="c1"># 10x10</span>
+    <span class="n">conv</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>  <span class="c1"># 5x5</span>
+    <span class="n">conv</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>  <span class="c1"># 3x3</span>
+    <span class="n">conv</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>  <span class="c1"># 2x2</span>
+    <span class="n">conv</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>  <span class="c1"># 1x1</span>
+    <span class="n">Flatten</span><span class="p">(),</span>
+<span class="p">)</span>
+
+<span class="n">learn</span> <span class="o">=</span> <span class="n">Learner</span><span class="p">(</span>
+    <span class="n">dls</span><span class="p">,</span> <span class="n">simple_cnn</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">RocAucBinary</span><span class="p">()],</span> <span class="n">loss_func</span><span class="o">=</span><span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span>
+<span class="p">)</span>
+<span class="n">learn</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html"></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential (Input shape: 128 x 1 x 40 x 40)
+============================================================================
+Layer (type)         Output Shape         Param #    Trainable 
+============================================================================
+                     128 x 4 x 20 x 20   
+Conv2d                                    40         True      
+ReLU                                                           
+____________________________________________________________________________
+                     128 x 8 x 10 x 10   
+Conv2d                                    296        True      
+ReLU                                                           
+____________________________________________________________________________
+                     128 x 16 x 5 x 5    
+Conv2d                                    1168       True      
+ReLU                                                           
+____________________________________________________________________________
+                     128 x 32 x 3 x 3    
+Conv2d                                    4640       True      
+ReLU                                                           
+____________________________________________________________________________
+                     128 x 16 x 2 x 2    
+Conv2d                                    4624       True      
+ReLU                                                           
+____________________________________________________________________________
+                     128 x 2 x 1 x 1     
+Conv2d                                    290        True      
+____________________________________________________________________________
+                     128 x 2             
+Flatten                                                        
+____________________________________________________________________________
+
+Total params: 11,058
+Total trainable params: 11,058
+Total non-trainable params: 0
+
+Optimizer used: &lt;function Adam at 0x7fea02760430&gt;
+Loss function: &lt;function cross_entropy at 0x7fea509cf8b0&gt;
+
+Callbacks:
+  - TrainEvalCallback
+  - Recorder
+  - ProgressCallback
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since the final convolutional layer will be a tensor of shape <span class="math notranslate nohighlight">\(128\times2\times1\times1\)</span>, we’ve stripped off those final <span class="math notranslate nohighlight">\(1\times 1\)</span> axes via the <code class="docutils literal notranslate"><span class="pre">Flatten()</span></code> module. We can now verify that the output of this model is in a form suitable for classification:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simple_cnn</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([128, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Okay, this looks good, so let’s find a good learning rate and train for a few epochs:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">lr_find</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html"></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SuggestedLRs(valley=0.03981071710586548)
+</pre></div>
+</div>
+<img alt="_images/lecture05_34_3.png" src="_images/lecture05_34_3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">3e-3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>roc_auc_score</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.251922</td>
+      <td>0.257991</td>
+      <td>0.892286</td>
+      <td>0.957853</td>
+      <td>00:12</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.248150</td>
+      <td>0.243493</td>
+      <td>0.899114</td>
+      <td>0.963003</td>
+      <td>00:12</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.231296</td>
+      <td>0.237253</td>
+      <td>0.900543</td>
+      <td>0.964258</td>
+      <td>00:12</td>
+    </tr>
+  </tbody>
+</table></div></div>
+</div>
+<p>This model is much worse than the pretrained ResNet34 model that we fine-tuned in the previous lecture. We can also see that we’ve started overfitting quite strongly after the first epoch (because the training and validation losses are diverging). Let’s now see if we can make the model more accurate and train it even faster by using some of the techniques that the factory learners (like <code class="docutils literal notranslate"><span class="pre">vision_learner()</span></code>) provide under the hood.</p>
+</section>
+<section id="debugging-training-with-activation-statistics">
+<h1>Debugging training with activation statistics<a class="headerlink" href="#debugging-training-with-activation-statistics" title="Permalink to this headline">#</a></h1>
+<p>One way to train a more accurate CNN is simply double the number of filters in each stride-2 layer. However, increasing the number of filters also requires us to increase the kernel size. For example, if our first layer increases the number of filters from 4 to 8, then a <span class="math notranslate nohighlight">\(3 \times 3\)</span> kernel will not force the CNN to learn any useful features. To handle that, we’ll increase the kernel size to <span class="math notranslate nohighlight">\(5\times 5\)</span> and adjust the CNN architecture as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simple_cnn</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+        <span class="n">conv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">ks</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>  <span class="c1"># 20x20</span>
+        <span class="n">conv</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>  <span class="c1"># 10x10</span>
+        <span class="n">conv</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>  <span class="c1"># 5x5</span>
+        <span class="n">conv</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>  <span class="c1"># 3x3</span>
+        <span class="n">conv</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>  <span class="c1"># 2x2</span>
+        <span class="n">conv</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>  <span class="c1"># 1x1</span>
+        <span class="n">Flatten</span><span class="p">(),</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since we’ll be training this network in several ways, let’s wrap the creation of the <code class="docutils literal notranslate"><span class="pre">Learner</span></code> and training in a <code class="docutils literal notranslate"><span class="pre">fit()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="n">epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.06</span><span class="p">):</span>
+    <span class="n">learn</span> <span class="o">=</span> <span class="n">Learner</span><span class="p">(</span>
+        <span class="n">dls</span><span class="p">,</span>
+        <span class="n">simple_cnn</span><span class="p">(),</span>
+        <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">RocAucBinary</span><span class="p">()],</span>
+        <span class="n">loss_func</span><span class="o">=</span><span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">,</span>
+        <span class="n">cbs</span><span class="o">=</span><span class="n">ActivationStats</span><span class="p">(</span><span class="n">with_hist</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">learn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">lr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">learn</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To give a sense for what can go wrong when training CNNs, we’ve used a much larger learning rate than before. We’ve also use the <code class="docutils literal notranslate"><span class="pre">ActivationStats()</span></code> callback, which records the statistics of the activations in each layer - this will be handy for debugging. Let’s see how well this model performs after 1 epoch:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/lewis/miniconda3/envs/dl4phys/lib/python3.9/site-packages/fastai/callback/core.py:67: UserWarning: You are shadowing an attribute (modules) that exists in the learner. Use `self.learn.modules` to avoid this
+  warn(f&quot;You are shadowing an attribute ({name}) that exists in the learner. Use `self.learn.{name}` to avoid this&quot;)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>roc_auc_score</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.694601</td>
+      <td>0.693960</td>
+      <td>0.500343</td>
+      <td>0.500000</td>
+      <td>00:19</td>
+    </tr>
+  </tbody>
+</table></div></div>
+</div>
+<p>Okay, it seems the large learning rate has given us a model than doesn’t perform better than random chance. To diagnose the problem, we can use the <code class="docutils literal notranslate"><span class="pre">plot_layer_stats()</span></code> method that the <code class="docutils literal notranslate"><span class="pre">ActivationStats</span></code> callback has tracked. For example, here are the mean and standard deviation of the activations in the first layer:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">activation_stats</span><span class="o">.</span><span class="n">plot_layer_stats</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/lecture05_45_0.png" src="_images/lecture05_45_0.png" />
+</div>
+</div>
+<p>Here we can see that the mean and standard deviation have a somewhat dramatic spike / drop in the early stages of training. A bigger problem is that the fraction of activations that are near zero is almost 1 after a few iterations. This is a problem because activations that are zero in one layer, will propagate zeros to the next layer, and so on. As a result, these parts of the network are effectively turned off, which makes the learning process suboptimal.</p>
+<p>Let’s now have a look at the last convolutional layer in the CNN:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">activation_stats</span><span class="o">.</span><span class="n">plot_layer_stats</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/lecture05_47_0.png" src="_images/lecture05_47_0.png" />
+</div>
+</div>
+<p>Here we see a similar pattern, with the fraction of near zero activations reaching almost 1 in fewer iterations. Let’s see if we can imprve the situation by increasing the batch size.</p>
+<section id="increasing-the-batch-size">
+<h2>Increasing the batch size<a class="headerlink" href="#increasing-the-batch-size" title="Permalink to this headline">#</a></h2>
+<p>If you’re GPU can handle it, increasing the batch size is one technique that can sometimes stabilise training. This is because a larger batch size implies more accurate gradients, so SGD can potentially train more efficiently. Let’s try increasing our batch size by a factor of 4, training the model and investigating the activation statistics:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dls</span> <span class="o">=</span> <span class="n">get_dls</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
+<span class="n">learn</span> <span class="o">=</span> <span class="n">fit</span><span class="p">()</span>
+<span class="n">learn</span><span class="o">.</span><span class="n">activation_stats</span><span class="o">.</span><span class="n">plot_layer_stats</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/lewis/miniconda3/envs/dl4phys/lib/python3.9/site-packages/fastai/callback/core.py:67: UserWarning: You are shadowing an attribute (modules) that exists in the learner. Use `self.learn.modules` to avoid this
+  warn(f&quot;You are shadowing an attribute ({name}) that exists in the learner. Use `self.learn.{name}` to avoid this&quot;)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>roc_auc_score</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.693562</td>
+      <td>0.693991</td>
+      <td>0.499657</td>
+      <td>0.500000</td>
+      <td>00:12</td>
+    </tr>
+  </tbody>
+</table></div><img alt="_images/lecture05_51_3.png" src="_images/lecture05_51_3.png" />
+</div>
+</div>
+<p>Okay, increasing the batch size hasn’t helped much. Clearly the problem is that our learning rate is too large, which is causing training to diverge. One way to handle this is to use a <em>dynamic</em> learning rate that is adjusted from low to high, and back to low values during training itself! Let’s take a look at 1-cycle training and finally understand what’s going one when we call <code class="docutils literal notranslate"><span class="pre">Learner.fit_one_cycle()</span></code>.</p>
+</section>
+<section id="cycle-training">
+<h2>1-cycle training<a class="headerlink" href="#cycle-training" title="Permalink to this headline">#</a></h2>
+<p>The basic idea behind 1-cycle training is to split training into two phases:</p>
+<ul class="simple">
+<li><p><strong>Warmup:</strong> grow the learning rate from some minimum to maximum value. By starting with a small learning rate, we can avoid hopping out of a local minimum in the loss and diverging.</p></li>
+<li><p><strong>Annealing:</strong> decrease the learning rate from the maximum value to the minimum. By gradually lowering the learning rate, we avoid skipping a good local minimum towards the end of training.</p></li>
+</ul>
+<p>This technique is one of the main aspects that allows fastai to train fast and accurate models. As we’ve done in previous lectures, we can use the <code class="docutils literal notranslate"><span class="pre">fit_one_cycle()</span></code> method, so let’s adjust our <code class="docutils literal notranslate"><span class="pre">fit()</span></code> function and train again:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="n">epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.06</span><span class="p">):</span>
+    <span class="n">learn</span> <span class="o">=</span> <span class="n">Learner</span><span class="p">(</span>
+        <span class="n">dls</span><span class="p">,</span>
+        <span class="n">simple_cnn</span><span class="p">(),</span>
+        <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">RocAucBinary</span><span class="p">()],</span>
+        <span class="n">loss_func</span><span class="o">=</span><span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">,</span>
+        <span class="n">cbs</span><span class="o">=</span><span class="n">ActivationStats</span><span class="p">(</span><span class="n">with_hist</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">lr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">learn</span>
+
+<span class="n">learn</span> <span class="o">=</span> <span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/lewis/miniconda3/envs/dl4phys/lib/python3.9/site-packages/fastai/callback/core.py:67: UserWarning: You are shadowing an attribute (modules) that exists in the learner. Use `self.learn.modules` to avoid this
+  warn(f&quot;You are shadowing an attribute ({name}) that exists in the learner. Use `self.learn.{name}` to avoid this&quot;)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>roc_auc_score</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.255070</td>
+      <td>0.257523</td>
+      <td>0.892029</td>
+      <td>0.957344</td>
+      <td>00:12</td>
+    </tr>
+  </tbody>
+</table></div></div>
+</div>
+<p>Nice, we’ve finally got a model that performs better than random! All fastai <code class="docutils literal notranslate"><span class="pre">Learner</span></code>s come with a <code class="docutils literal notranslate"><span class="pre">Recorder()</span></code> callback, which tracks various aspect of training. Here we can use it to inspect the evolution of the learning rate:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">plot_sched</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/lecture05_57_0.png" src="_images/lecture05_57_0.png" />
+</div>
+</div>
+<p>Here we can see the learning rate increases linearly until the maximum value, before being annealed with a cosine function. The second plot refers to a hyperparameter called <em>momentum</em>, which takes values between <span class="math notranslate nohighlight">\([0,1]\)</span> and is often denoted by <span class="math notranslate nohighlight">\(\beta\)</span>. This hyperparameter belongs to a technique called <em>momentum optimization</em>, which extends SGD to speed up training. Recall that in SGD, we update our weights and biases according to the following update rule:</p>
+<div class="math notranslate nohighlight">
+\[ \theta \to \theta' = \theta - \eta \nabla_\theta L(\theta) .\]</div>
+<p>One problem with this rule, is that if the gradients are small in some region, then the subsequent updates will also be small and training can be slow. To deal with this, momentum optimization uses an <em>exponentially weighted average</em> to modify the update rule:</p>
+<p>\begin{align}
+\mathbf{m}’&amp;= \beta\mathbf{m} + (1-\beta)\nabla_\theta L(\theta) \
+\theta’ &amp;= \theta - \eta\mathbf{m}’
+\end{align}</p>
+<p>Intuitively, the momentum vector <span class="math notranslate nohighlight">\(\mathbf{m}\)</span> is storing a running average of past gradient values, and this enables the update step to pick directions based on these averages. The result is that SGD with momentum allows us to traverse the loss landscape much faster (especially through plateaus).</p>
+<p>Let’s now have a look at the activation statistics in the final <code class="docutils literal notranslate"><span class="pre">conv()</span></code> layer:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">activation_stats</span><span class="o">.</span><span class="n">plot_layer_stats</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/lecture05_59_0.png" src="_images/lecture05_59_0.png" />
+</div>
+</div>
+<p>Okay, we’ve getting somewhat better, but we still have quite a few activations getting close to zero towards the end of training. Let’s look at one last technique that can help us deal with this.</p>
+</section>
+<section id="batch-normalization">
+<h2>Batch normalization<a class="headerlink" href="#batch-normalization" title="Permalink to this headline">#</a></h2>
+<p>A very effective technique to deal with vanishing activations in training is to use <em>batch normalization</em> (or batchnorm for short). This techniuqe tries to maintain a good distribution of activations during training by applying a normalization operation just before or after each hidden layer. The way this works is to zero-center and normalize the activations in each layer by introducing two new parameters <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> (not the same <span class="math notranslate nohighlight">\(\beta\)</span> from momentum!). The parameters are used to learn the optimal scale of the inputs across each layer, and the batchnorm operation can be summarised in the following equations:</p>
+<p>\begin{align}
+\mathbf{\mu}_B &amp;= \frac{1}{m_B} \sum_i \mathbf{x}^{(i)} \
+\sigma_B^2 &amp;= \frac{1}{m_B} \sum_i \left(\mathbf{x}^{(i)} - \mathbf{\mu}_B\right)^2  \
+\hat{\mathbf{x}}^{(i)}  &amp;= \frac{\mathbf{x}^{(i)} - \mathbf{\mu}_B}{\sqrt{\mathbf{\sigma}_B^2 + \epsilon}} \
+\mathbf{z}^{(i)} &amp;= \mathbf{\gamma} \odot \hat{\mathbf{x}}^{(i)} + \mathbf{\beta}
+\end{align}</p>
+<p>These statistics make it easier to train models, since we don’t have to enforce a global normalization on the data (as we did with the <code class="docutils literal notranslate"><span class="pre">MinMaxScaler()</span></code> in previous lectures).</p>
+<p>Implementing batchnorm in PyTorch is rather simple: we just add a <code class="docutils literal notranslate"><span class="pre">nn.BatchNorm2d()</span></code> layer after each convolution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">conv</span><span class="p">(</span><span class="n">ni</span><span class="p">,</span> <span class="n">nf</span><span class="p">,</span> <span class="n">ks</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">ni</span><span class="p">,</span> <span class="n">nf</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">ks</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="n">ks</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">nf</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">act</span><span class="p">:</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now train the model again with 1-cycle policy training:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/lewis/miniconda3/envs/dl4phys/lib/python3.9/site-packages/fastai/callback/core.py:67: UserWarning: You are shadowing an attribute (modules) that exists in the learner. Use `self.learn.modules` to avoid this
+  warn(f&quot;You are shadowing an attribute ({name}) that exists in the learner. Use `self.learn.{name}` to avoid this&quot;)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>roc_auc_score</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.216597</td>
+      <td>0.214471</td>
+      <td>0.909714</td>
+      <td>0.970490</td>
+      <td>00:22</td>
+    </tr>
+  </tbody>
+</table></div></div>
+</div>
+<p>Nice! This is pretty great result after just one epoch of training, and gets is quite close to the results quoted for CNNs in the top taggin review paper. Let’s also inspect the activation statistics:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">activation_stats</span><span class="o">.</span><span class="n">plot_layer_stats</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/lecture05_67_0.png" src="_images/lecture05_67_0.png" />
+</div>
+</div>
+<p>This is looking much better: the activations evolve smoothly and we’ve managed to prevent half of the activations from vanishing. Since batchnorm claims to work with large learning rates, let’s ramp this up to 0.1 and see what we get:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/lewis/miniconda3/envs/dl4phys/lib/python3.9/site-packages/fastai/callback/core.py:67: UserWarning: You are shadowing an attribute (modules) that exists in the learner. Use `self.learn.modules` to avoid this
+  warn(f&quot;You are shadowing an attribute ({name}) that exists in the learner. Use `self.learn.{name}` to avoid this&quot;)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>roc_auc_score</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.241621</td>
+      <td>0.324524</td>
+      <td>0.879571</td>
+      <td>0.951736</td>
+      <td>00:22</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.232091</td>
+      <td>1.657844</td>
+      <td>0.655914</td>
+      <td>0.913255</td>
+      <td>00:21</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.222661</td>
+      <td>0.819799</td>
+      <td>0.612086</td>
+      <td>0.906052</td>
+      <td>00:21</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.220339</td>
+      <td>0.276002</td>
+      <td>0.885429</td>
+      <td>0.957145</td>
+      <td>00:21</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.217905</td>
+      <td>0.410375</td>
+      <td>0.813257</td>
+      <td>0.920187</td>
+      <td>00:21</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.209055</td>
+      <td>0.433610</td>
+      <td>0.802971</td>
+      <td>0.920204</td>
+      <td>00:21</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0.204782</td>
+      <td>0.363477</td>
+      <td>0.832943</td>
+      <td>0.945951</td>
+      <td>00:21</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>0.198509</td>
+      <td>0.206748</td>
+      <td>0.913429</td>
+      <td>0.972911</td>
+      <td>00:21</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>0.191656</td>
+      <td>0.202564</td>
+      <td>0.916000</td>
+      <td>0.974434</td>
+      <td>00:21</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>0.182151</td>
+      <td>0.196292</td>
+      <td>0.918886</td>
+      <td>0.975237</td>
+      <td>00:21</td>
+    </tr>
+  </tbody>
+</table></div></div>
+</div>
+<p>Great, this has given us a small boost and only took a few minutes to train a CNN form scratch!</p>
+</section>
+</section>
+<section id="exercises">
+<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Implement the same CNN architecture from the review. Can you get close to their results?</p></li>
+<li><p>Read the <a class="reference external" href="https://arxiv.org/abs/1708.07120">1-cycle policy training paper</a></p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="lecture04.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Lecture 4 - Jet images and transfer learning with CNNs</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="lecture06.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lecture 6 - Generating hep-ph titles with Transformers</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Lewis Tunstall<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

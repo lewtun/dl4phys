@@ -1,0 +1,1118 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Lecture 4 - Jet images and transfer learning with CNNs &#8212; Deep Learning for Particle Physicists</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Lecture 5 - Convolutional neural networks" href="lecture05.html" />
+    <link rel="prev" title="Lecture 3 - Neural network deep dive" href="lecture03.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Deep Learning for Particle Physicists</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Deep Learning for Particle Physicists
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture01.html">
+   Lecture 1 - Jet tagging with neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture02.html">
+   Lecture 2 - Gradient descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture03.html">
+   Lecture 3 - Neural network deep dive
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Lecture 4 - Jet images and transfer learning with CNNs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture05.html">
+   Lecture 5 - Convolutional neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lecture06.html">
+   Lecture 6 - Generating hep-ph titles with Transformers
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/lewtun/dl4phys/blob/main/lecture04.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/lewtun/dl4phys"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/lecture04.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-objectives">
+   Learning objectives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-jet-images">
+   Creating jet images
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rotating-to-hadronic-coordinates">
+     Rotating to hadronic coordinates
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-images-to-tensors">
+   From images to tensors
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fine-tuning-a-pretrained-cnn">
+   Fine-tuning a pretrained CNN
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Lecture 4 - Jet images and transfer learning with CNNs</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-objectives">
+   Learning objectives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-jet-images">
+   Creating jet images
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rotating-to-hadronic-coordinates">
+     Rotating to hadronic coordinates
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-images-to-tensors">
+   From images to tensors
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fine-tuning-a-pretrained-cnn">
+   Fine-tuning a pretrained CNN
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="lecture-4-jet-images-and-transfer-learning-with-cnns">
+<h1>Lecture 4 - Jet images and transfer learning with CNNs<a class="headerlink" href="#lecture-4-jet-images-and-transfer-learning-with-cnns" title="Permalink to this headline">#</a></h1>
+<blockquote>
+<div><p>A look at converting jets into images and classifying them with convolutional neural networks</p>
+</div></blockquote>
+<section id="learning-objectives">
+<h2>Learning objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Understand how to convert jets into images</p></li>
+<li><p>Know what transfer learning is and it’s advantages compared to training a neural network from scratch</p></li>
+<li><p>Understand the main steps needed to fine-tune a convolutional neural network</p></li>
+</ul>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Chapter 1 of <a class="reference external" href="https://github.com/fastai/fastbook"><em>Deep Learning for Coders with fastai &amp; PyTorch</em></a> by Jeremy Howard and Sylvain Gugger.</p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/1902.09914"><em>The Machine Learning Landscape of Top Taggers</em></a> by G. Kasieczka et al.</p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/1511.05190">Jet-Images – Deep Learning Edition</a> by L. de Oliviera et al.</p></li>
+</ul>
+</section>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment and run this cell if using Colab, Kaggle etc</span>
+<span class="c1"># %pip install fastai==2.6.0 datasets energyflow huggingface_hub</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span> <span class="nn">energyflow.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">center_ptyphims</span><span class="p">,</span>
+    <span class="n">phi_fix</span><span class="p">,</span>
+    <span class="n">pixelate</span><span class="p">,</span>
+    <span class="n">ptyphims_from_p4s</span><span class="p">,</span>
+    <span class="n">reflect_ptyphims</span><span class="p">,</span>
+    <span class="n">rotate_ptyphims</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">huggingface_hub</span> <span class="kn">import</span> <span class="n">from_pretrained_fastai</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">auc</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">roc_curve</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datasets</span>
+
+<span class="c1"># Suppress logs to keep things tidy</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">set_verbosity_error</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-jet-images">
+<h2>Creating jet images<a class="headerlink" href="#creating-jet-images" title="Permalink to this headline">#</a></h2>
+<p>As we saw in lectures 1 and 2, there are various ways to represent jet data for neural networks. So far, we’ve focused on <span class="math notranslate nohighlight">\(N\)</span>-subjettiness features <span class="math notranslate nohighlight">\(\tau_N^{\beta}\)</span>, which represent jets in a <em>tabular</em> format. Today, we’ll examine another popular representation that treats <em>jets as 2D images</em>. An example from the top tagging review is shown below:</p>
+<center>
+    <img alt="jet-images" caption="Jet images" src="images/jet-images.png" id="jet-images" width=800/>
+</center><p>But why consider images in the first place? The motivation here is partly historical: computer vision is where the deep learning revolution started in 2011, with <a class="reference external" href="https://people.idsia.ch/~juergen/DanNet-triggers-deep-CNN-revolution-2011.html">DanNet</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/AlexNet">AlexNet</a> smashing the state-of-the-art on popular benchmarks. Both approaches were based on a type of architecture called a <a class="reference external" href="https://en.wikipedia.org/wiki/Convolutional_neural_network"><em>convolutional neural network</em></a> (CNN), which is especially well suited for analysing images. In the next lecture we’ll examine how CNNs work in detail, so today we’ll focus on creating jet images and training a CNN with the high-level API of fastai.</p>
+<p>To get started, let’s take a look at how we can construct images from the 4-vectors associated with the consituents in a jet. We’ll use the raw events from the <a class="reference external" href="https://huggingface.co/datasets/dl4phys/top_tagging"><em>Top Quark Tagging</em> dataset</a> in lecture 1, so let’s download it and grab a sample of 10,000 events to play with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_events</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;dl4phys/top_tagging&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;validation&quot;</span><span class="p">)</span>
+<span class="n">sample_df</span> <span class="o">=</span> <span class="n">raw_events</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10_000</span><span class="p">))</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+<span class="n">sample_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>E_0</th>
+      <th>PX_0</th>
+      <th>PY_0</th>
+      <th>PZ_0</th>
+      <th>E_1</th>
+      <th>PX_1</th>
+      <th>PY_1</th>
+      <th>PZ_1</th>
+      <th>E_2</th>
+      <th>PX_2</th>
+      <th>...</th>
+      <th>E_199</th>
+      <th>PX_199</th>
+      <th>PY_199</th>
+      <th>PZ_199</th>
+      <th>truthE</th>
+      <th>truthPX</th>
+      <th>truthPY</th>
+      <th>truthPZ</th>
+      <th>ttv</th>
+      <th>is_signal_new</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>130.172562</td>
+      <td>114.353065</td>
+      <td>-59.476486</td>
+      <td>18.188450</td>
+      <td>58.261734</td>
+      <td>56.383465</td>
+      <td>-6.442986</td>
+      <td>-13.184177</td>
+      <td>43.596382</td>
+      <td>37.914547</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>496.599976</td>
+      <td>418.331940</td>
+      <td>-202.994308</td>
+      <td>43.685955</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>144.244232</td>
+      <td>44.394894</td>
+      <td>71.800972</td>
+      <td>-116.962021</td>
+      <td>176.547729</td>
+      <td>61.791088</td>
+      <td>51.010948</td>
+      <td>-157.317657</td>
+      <td>134.554794</td>
+      <td>47.264194</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1061.465576</td>
+      <td>240.111099</td>
+      <td>465.869263</td>
+      <td>-906.836731</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>164.264938</td>
+      <td>29.799849</td>
+      <td>-155.011093</td>
+      <td>45.458752</td>
+      <td>154.540726</td>
+      <td>34.444710</td>
+      <td>-140.643768</td>
+      <td>53.997475</td>
+      <td>102.357109</td>
+      <td>19.766624</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>190.001175</td>
+      <td>-59.107372</td>
+      <td>-180.212479</td>
+      <td>11.411892</td>
+      <td>36.530270</td>
+      <td>-16.578011</td>
+      <td>-32.546757</td>
+      <td>0.582238</td>
+      <td>28.827248</td>
+      <td>-10.152600</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>197.350937</td>
+      <td>-190.924622</td>
+      <td>-28.691614</td>
+      <td>-40.889717</td>
+      <td>65.894730</td>
+      <td>-63.749012</td>
+      <td>-9.580021</td>
+      <td>-13.652922</td>
+      <td>53.116070</td>
+      <td>-52.294987</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 806 columns</p>
+</div></div></div>
+</div>
+<p>Here we’ve used the <code class="docutils literal notranslate"><span class="pre">shuffle()</span></code> and <code class="docutils literal notranslate"><span class="pre">select()</span></code> methods to create a random sample, and then converted the result to a pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>. It’s convenient to reshape the events so that instead of having 800 columns, we have 200 columns, where each column groups the 4-vectors of a constituent in a single array. We can do this by casting our <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> to NumPy and applying the <code class="docutils literal notranslate"><span class="pre">reshape()</span></code> method as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reshape to size (num_jets, num_consituents, 4)</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">sample_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">800</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="c1"># Extract array of labels</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;is_signal_new&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">events</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">labels</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((10000, 200, 4), (10000,))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, each row in our <code class="docutils literal notranslate"><span class="pre">events</span></code> array corresponds to an array of shape <code class="docutils literal notranslate"><span class="pre">(num_constituents,</span> <span class="pre">4)</span></code>. We can inspect one of these constituent 4-vectors as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([130.17256 , 114.353065, -59.476486,  18.18845 ], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="rotating-to-hadronic-coordinates">
+<h3>Rotating to hadronic coordinates<a class="headerlink" href="#rotating-to-hadronic-coordinates" title="Permalink to this headline">#</a></h3>
+<center>
+    <img alt="jet-images" caption="Jet images" src="images/jet-tagging.png" id="jet-images" width=600/>
+</center><p>Each of the 4-vectors in <code class="docutils literal notranslate"><span class="pre">events</span></code> is currently stored in Cartesian coordinates <span class="math notranslate nohighlight">\((E, p_x, p_y, p_z)\)</span>. However, it is convenient to rotate the basis to <em>hadronic coordinates</em> <span class="math notranslate nohighlight">\((p_T, y, \phi, m)\)</span>, where:</p>
+<div class="math notranslate nohighlight">
+\[ p_T = \sqrt{p_x^2 + p_y^2} \,, \quad y = \mathrm{arctanh}\, \frac{p_z}{E} \,, \quad \phi = \arctan \frac{p_y}{p_x}\,, \quad m = \sqrt{E - p_x^2 - p_y^2 - p_z^2}\]</div>
+<p>Here <span class="math notranslate nohighlight">\(p_T\)</span> denotes the transverse momentum, <span class="math notranslate nohighlight">\(y\)</span> is the rapidity, <span class="math notranslate nohighlight">\(\phi\)</span> the azimuthal angle, and <span class="math notranslate nohighlight">\(m\)</span> the mass. Although we could implement these formulas directly in NumPy, we’ll use the <a class="reference external" href="https://energyflow.network/">EnergyFlow</a> library instead, which provides many utility functions for precisely these cases. To convert our 4-vectors to hadronic coordinates, we use the <code class="docutils literal notranslate"><span class="pre">ptyphims_from_p4s()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events_hadronic</span> <span class="o">=</span> <span class="n">ptyphims_from_p4s</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="n">phi_ref</span><span class="o">=</span><span class="s2">&quot;hardest&quot;</span><span class="p">,</span> <span class="n">mass</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, the <code class="docutils literal notranslate"><span class="pre">phi_ref</span></code> argument specifies which <span class="math notranslate nohighlight">\(\phi\)</span> value to use as reference within <span class="math notranslate nohighlight">\(\pm \pi\)</span>. The next step is to centre the collection of 4-vectors associated with each event. We can use the <code class="docutils literal notranslate"><span class="pre">center_ptyphims()</span></code> function to handle that for us:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events_centered</span> <span class="o">=</span> <span class="p">[</span><span class="n">center_ptyphims</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_hadronic</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The final step is to reflect and rotate our events:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events_reflected_and_rotated</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">reflect_ptyphims</span><span class="p">(</span><span class="n">rotate_ptyphims</span><span class="p">(</span><span class="n">event</span><span class="p">))</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_centered</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The final step is to create a jet image from an array of 4-vectors.  Here we can use the <code class="docutils literal notranslate"><span class="pre">pixelate()</span></code> function from EnergyFlow and we’ll follow the precription from the top tagging review to create images of <span class="math notranslate nohighlight">\(40\times 40\)</span> pixels. The end result is as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">images</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pixelate</span><span class="p">(</span>
+        <span class="n">event</span><span class="p">,</span>
+        <span class="n">npix</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+        <span class="n">img_width</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">nb_chan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">charged_counts_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_reflected_and_rotated</span>
+<span class="p">]</span>
+
+<span class="n">images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">images</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">),</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have our images, let’s split them into those corresponding to the top-quarks and QCD background:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">qcd_images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And now we can plot a few examples to see how the images look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;QCD background&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">qcd_images</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Top quark&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">top_images</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/lecture04_34_0.png" src="_images/lecture04_34_0.png" />
+<img alt="_images/lecture04_34_1.png" src="_images/lecture04_34_1.png" />
+</div>
+</div>
+<p>Notice how the background events are much more clustered around the centre, while the top-quark jets have multiple “prongs”. We can see this more clearly by averaging the pixel values across all events:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">qcd_images</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Average QCD&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$\eta$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$\phi$&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">top_images</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Average top&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$\eta$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$\phi$&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/lecture04_36_0.png" src="_images/lecture04_36_0.png" />
+</div>
+</div>
+<p>Great, we now have a way to convert raw 4-vectors into jet images! For convenience, we’ve applied the above steps to the whole <code class="docutils literal notranslate"><span class="pre">top_tagging</span></code> dataset, so let’s download it now from the <a class="reference external" href="https://huggingface.co/datasets/dl4phys/top_tagging_images">Hugging Face Hub</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">images_ds</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;dl4phys/top_tagging_images&quot;</span><span class="p">)</span>
+<span class="n">images_ds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "351d1b9ce7b046498587b888d78c9a8c", "version_major": 2, "version_minor": 0}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DatasetDict({
+    validation: Dataset({
+        features: [&#39;image&#39;, &#39;label&#39;],
+        num_rows: 403000
+    })
+    test: Dataset({
+        features: [&#39;image&#39;, &#39;label&#39;],
+        num_rows: 404000
+    })
+    train: Dataset({
+        features: [&#39;image&#39;, &#39;label&#39;],
+        num_rows: 1211000
+    })
+})
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we now have three splits to work with, and we can access an individual image by indexing as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">images_ds</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/lecture04_40_0.png" src="_images/lecture04_40_0.png" />
+</div>
+</div>
+<p>Okay, this looks like a jet image - let’s now take a look at converting them to PyTorch tensors that are suitable for training a neural net!</p>
+</section>
+</section>
+<section id="from-images-to-tensors">
+<h2>From images to tensors<a class="headerlink" href="#from-images-to-tensors" title="Permalink to this headline">#</a></h2>
+<p>Now that we have a dataset of images, the next thing we need to do is convert them to PyTorch tensors and wrap them in a <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code>. One way to do this is via <code class="docutils literal notranslate"><span class="pre">torchvision</span></code>’s <code class="docutils literal notranslate"><span class="pre">ToTensor</span></code> class, which converts a PIL image into a tensor as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">ToTensor</span><span class="p">()(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([1, 40, 40])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we can see that we now have a tensor of shape <code class="docutils literal notranslate"><span class="pre">(num_channels,</span> <span class="pre">height,</span> <span class="pre">width)</span></code>, where <code class="docutils literal notranslate"><span class="pre">num_channels</span></code> is 1 because we’re dealing with black and white images, and <code class="docutils literal notranslate"><span class="pre">height</span></code> and <code class="docutils literal notranslate"><span class="pre">width</span></code> denote the number of pixels. To apply <code class="docutils literal notranslate"><span class="pre">ToTensor</span></code> to multiple images, we can use a list comprehension and <code class="docutils literal notranslate"><span class="pre">torch.cat()</span></code> to concatenate all the tensors as a single tensor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">images_ds</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][:</span><span class="mi">10</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">]])</span>
+<span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([10, 40, 40])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now this isn’t quite what we want because CNNs in PyTorch expect rank-4 tensors with a shape <code class="docutils literal notranslate"><span class="pre">(minibatch,</span> <span class="pre">channels,</span> <span class="pre">height,</span> <span class="pre">width)</span></code>, where <code class="docutils literal notranslate"><span class="pre">channels</span></code> refers to the number of color channels (e.g. RGB) of the image. In our case, the images are black and white, so we just need to reshape the tensor to insert a new dimension in the second position:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">images_ds</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][:</span><span class="mi">10</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">]])</span>
+<span class="n">x</span><span class="o">.</span><span class="n">unsqueeze_</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([10, 1, 40, 40])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Great, we now have the image tensors in the right shape, so let write a simple <code class="docutils literal notranslate"><span class="pre">get_dataset()</span></code> helper function that applies this over a single training split:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">num_examples</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num_examples</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_examples</span><span class="p">))</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]])</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]])</span>
+
+    <span class="k">return</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we’ve also collected the labels in a single tensor and returned a <code class="docutils literal notranslate"><span class="pre">TensorDataset</span></code> object that we can iterate over:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lower the training size if Colab RAM explodes 💣</span>
+<span class="n">train_ds</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">images_ds</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">num_examples</span><span class="o">=</span><span class="mi">350_000</span><span class="p">)</span>
+<span class="n">valid_ds</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">images_ds</span><span class="p">[</span><span class="s2">&quot;validation&quot;</span><span class="p">],</span> <span class="n">num_examples</span><span class="o">=</span><span class="mi">50_000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have the PyTorch datasets prepared, let’s wrap them in dataloaders so we can generate minibatches during training:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_ds</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">valid_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">valid_ds</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">DataLoaders</span><span class="p">(</span><span class="n">train_dl</span><span class="p">,</span> <span class="n">valid_dl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fine-tuning-a-pretrained-cnn">
+<h2>Fine-tuning a pretrained CNN<a class="headerlink" href="#fine-tuning-a-pretrained-cnn" title="Permalink to this headline">#</a></h2>
+<p>Now that we have prepared our data and created dataloaders, we can train a CNN! Instead of training a CNN from scratch, we’ll use a <em>pretrained model</em> that has been already been trained to classify over a million photos in the famous <a class="reference external" href="https://www.image-net.org/">ImageNet dataset</a>. These models are called “pretrained” because their weights have already been optimized by training on another dataset. The layers in a pretrained model are well suited for detecting edges, colour gradient and so on, which allows us to train a new model with much less labelled data, and much faster.</p>
+<p>In practice, we replace the last layer of the pretrained model with a randomly initialized one that has the appropriate shape for the task at hand. For instance, ImageNet involves 1,000 different classes, so if we want to re-use the weights of a model trained on this dataset for a new set of classes, we’ll need to resize the last layer. This last layer is often referred to as the <em>head</em> of the network, with every layer before it belonging to the <em>body</em>.</p>
+<p>This process of reusing the weights to solve a different task is called <em>transfer learning</em>, and now underpins much of the success that deep learning has achieved in computer vision, natural language processing, and audio. A cartoon of the process is shown below:</p>
+<center>
+    <img alt="transfer" caption="Transfer learning" src="images/transfer-learning.png" id="transfer-learning" width=800/>
+</center><p>Anyway, enough jargon - let’s train a model! As we did in lecture 1, we’ll use the high-level API of fastai, which provides factory methods for various domains. Instead of a <code class="docutils literal notranslate"><span class="pre">tabular_learner()</span></code> we’ll use the <code class="docutils literal notranslate"><span class="pre">vision_learner()</span></code>, which is designed for computer vision tasks:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">vision_learner</span><span class="p">(</span>
+    <span class="n">dls</span><span class="p">,</span>
+    <span class="n">resnet34</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">RocAucBinary</span><span class="p">()],</span>
+    <span class="n">n_in</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_out</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">loss_func</span><span class="o">=</span><span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we’ve provided the dataloaders and specified <code class="docutils literal notranslate"><span class="pre">resnet34</span></code> as the name of the pretrained model we wish to initialise with. ResNets are a popular type of CNN that we might cover in a future lesson, but for now it is enough to know that they are great for most computer vision tasks. Now, because we’re using custom dataloaders instead of the factory methods provided by fastai, we need to specify that our model should run on a GPU instead of CPU (the default). We can do that by tapping into the model and selecting the desired device name with PyTorch’s <code class="docutils literal notranslate"><span class="pre">to()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that our model is on the GPU, we can follow the same steps we’ve done in previous lectures. First we find a good learning rate:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">lr_find</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html"></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SuggestedLRs(valley=0.0010000000474974513)
+</pre></div>
+</div>
+<img alt="_images/lecture04_63_3.png" src="_images/lecture04_63_3.png" />
+</div>
+</div>
+<p>And finally we can train the model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">fine_tune</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">3e-3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that this time we didn’t call <code class="docutils literal notranslate"><span class="pre">fit()</span></code> or <code class="docutils literal notranslate"><span class="pre">fit_one_cycle()</span></code> as we’ve done in previous lectures. That’s because we’re starting with a pretrained model whose weights we “fine-tuned” to the new dataset of jet images. This process involves some tricks which is why it is called <code class="docutils literal notranslate"><span class="pre">fine_tune()</span></code>. Anyway, we’ve now got a model that scores pretty well on the validation set. Let’s compute the same metrics we did in lecture 1, but now on the test set:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_metrics</span><span class="p">(</span><span class="n">learn</span><span class="p">,</span> <span class="n">test_ds</span><span class="p">):</span>
+    <span class="n">test_dl</span> <span class="o">=</span> <span class="n">learn</span><span class="o">.</span><span class="n">dls</span><span class="o">.</span><span class="n">test_dl</span><span class="p">(</span><span class="n">test_items</span><span class="o">=</span><span class="n">test_ds</span><span class="p">)</span>
+    <span class="n">preds</span><span class="p">,</span> <span class="n">targs</span> <span class="o">=</span> <span class="n">learn</span><span class="o">.</span><span class="n">get_preds</span><span class="p">(</span><span class="n">dl</span><span class="o">=</span><span class="n">test_dl</span><span class="p">)</span>
+    <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">targs</span><span class="p">,</span> <span class="n">y_score</span><span class="o">=</span><span class="n">preds</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">acc_test</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">targs</span><span class="p">,</span> <span class="n">preds</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">auc_test</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+    <span class="n">background_eff</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">tpr</span><span class="p">,</span> <span class="n">fpr</span><span class="p">)</span>
+    <span class="n">background_eff_at_30</span> <span class="o">=</span> <span class="n">background_eff</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">acc_test</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AUC: </span><span class="si">{</span><span class="n">auc_test</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Backround rejection at signal efficiency 0.3: </span><span class="si">{</span><span class="mi">1</span><span class="o">/</span><span class="n">background_eff_at_30</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_ds</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">images_ds</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">])</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compute_metrics</span><span class="p">(</span><span class="n">learn</span><span class="p">,</span> <span class="n">test_ds</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Comparing our results against those in the top tagging review, shows that our CNN is getting quite competitive results with the state-of-the-art!</p>
+<center>
+    <img alt="transfer" caption="Transfer learning" src="images/top-tagging-scores.png" id="transfer-learning" width=800/>
+</center></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="lecture03.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Lecture 3 - Neural network deep dive</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="lecture05.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lecture 5 - Convolutional neural networks</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Lewis Tunstall<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
